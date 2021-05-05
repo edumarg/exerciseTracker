@@ -8,15 +8,15 @@ const exercisesRouter = require("./routes/exercises");
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3900;
 const DB_URL = process.env.DB_URL;
 
 // Server start
 
-app.use(cors);
+app.use(cors());
 app.use(express.json());
-app.use("/users", usersRouter);
-app.use("/exercises", exercisesRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/exercises", exercisesRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port: ${port}`);

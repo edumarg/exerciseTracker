@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Exercise = require("../models/exercise.model");
+const Exercise = require("../models/exercise");
 
 // GET exercises
 

@@ -3,8 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const User = require("./models/user.model");
-const Exercise = require("./models/exercise.model");
+const usersRouter = require("./routes/users");
+const exercisesRouter = require("./routes/exercises");
 
 const app = express();
 
@@ -15,6 +15,8 @@ const DB_URL = process.env.DB_URL;
 
 app.use(cors);
 app.use(express.json());
+app.use("/users", usersRouter);
+app.use("/exercises", exercisesRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port: ${port}`);

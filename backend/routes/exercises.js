@@ -75,4 +75,12 @@ router.put("/:id", async (req, res) => {
   res.send(exercise);
 });
 
+// DELETE Exercise
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const exercise = await Exercise.findByIdAndDelete(id);
+  if (!exercise) return res.status(404).send("Exercise not found");
+  res.send(exercise);
+});
+
 module.exports = router;

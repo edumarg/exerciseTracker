@@ -1,4 +1,5 @@
 const express = require("express");
+const { findByIdAndDelete } = require("../models/user");
 const router = express.Router();
 
 const User = require("../models/user");
@@ -66,6 +67,15 @@ router.put("/:id", async (req, res) => {
   const data = req.body;
 
   const user = await updateUserById(id, data);
+  if (!user) return res.status(404).send("User not found");
+  res.send(user);
+});
+
+// DELETE user
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findByIdAndDelete(id);
   if (!user) return res.status(404).send("User not found");
   res.send(user);
 });

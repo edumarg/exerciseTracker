@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class CreateUser extends Component {
   state = { username: " " };
@@ -8,10 +9,20 @@ class CreateUser extends Component {
     this.setState({ username: myUsername });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    const user = this.state.username;
+    const user = { username: this.state.username };
     console.log(user);
+    try {
+      const response = await axios.post(
+        "http://localhost:3900/api/users",
+        user
+      );
+      console.log("User created!!!", response.data);
+    } catch (ex) {
+      console.log("error", ex.message);
+    }
+
     this.setState({ username: "" });
   }
 

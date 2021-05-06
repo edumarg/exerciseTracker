@@ -1,7 +1,7 @@
 import { React } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
 
+import Navbar from "./components/navBar";
 import CreateUser from "./components/createUser";
 import CreateExercise from "./components/createExercise";
 import EditExercise from "./components/editExercise";

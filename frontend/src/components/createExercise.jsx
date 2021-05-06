@@ -32,8 +32,6 @@ class CreateExercise extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("submit event", event.keyCode);
-
     const { userId, description, duration, date } = this.state;
     const exercise = {
       userId: userId,

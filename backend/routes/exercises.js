@@ -41,7 +41,7 @@ async function postNewExercise(data) {
     const result = await exercise.save();
     return result;
   } catch (ex) {
-    res.status(400).send(ex.message);
+    return ex.message;
   }
 }
 

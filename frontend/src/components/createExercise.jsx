@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class CreateExercise extends Component {
   state = {
     data: {
-      userId: "",
+      username: "",
       description: "",
       duration: 0,
       date: new Date(),
@@ -11,13 +12,14 @@ class CreateExercise extends Component {
     users: [],
   };
 
-  componentDidMount() {
-    this.setState({
-      users: [
-        { _id: 1234, username: "edumarg" },
-        { _id: 4567, username: "harry" },
-      ],
-    });
+  async getUsers() {
+    const response = await axios.get("http://localhost:3900/api/users");
+    return response.data;
+  }
+
+  async componentDidMount() {
+    const myUsers = await this.getUsers();
+    this.setState({ users: myUsers });
   }
 
   handleChange(event) {
@@ -30,18 +32,28 @@ class CreateExercise extends Component {
     this.setState({ data: myData });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    const { userId, description, duration, date } = this.state;
+    const { username, description, duration, date } = this.state.data;
+    const myDate = date.split("-");
+    const newDAte = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+    console.log("DATE:", newDAte);
     const exercise = {
-      userId: userId,
+      username: username,
       description: description,
-      duration: duration,
-      date: date,
+      duration: parseInt(duration),
+      date: newDAte,
     };
-
-    console.log(exercise);
-    window.location = "/";
+    try {
+      const response = await axios.post(
+        "http://localhost:3900/api/exercises",
+        exercise
+      );
+      console.log(response.data);
+    } catch (ex) {
+      console.log(ex.message);
+    }
+    // window.location = "/";
   }
 
   render() {
@@ -53,15 +65,15 @@ class CreateExercise extends Component {
           <form onSubmit={(event) => this.handleSubmit(event)}>
             <select
               className="form-select"
-              id="userId"
-              name="userId"
+              id="username"
+              name="username"
               autoFocus
               required
               onChange={(event) => this.handleChange(event)}
             >
               <option defaultValue>Choose a user</option>
               {users.map((user) => (
-                <option value={user._id} key={user._id}>
+                <option value={user.name} key={user._id}>
                   {user.username}
                 </option>
               ))}
